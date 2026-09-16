@@ -73,7 +73,7 @@ Cheers to another fantastic year of our friendship!`,
       caption: 'Laughter, joy, and dancing that made history!'
     },
     {
-      img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=80',
+      img: 'https://i.ibb.co/4Z629cWX/457021667-872405014265700-5590962591210374905-n.jpg?w=500&auto=format&fit=crop&q=80',
       title: 'The Birthday Superstar',
       date: 'Main Character Energy',
       caption: 'Today is entirely dedicated to you and your greatness!'
