@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BIRTHDAY CELEBRATION WEB APP - INTERACTIVE SCRIPT
+   BIRTHDAY CELEBRATION WEB APP - ENHANCED SCRIPT
    ========================================================================== */
 
 (function () {
@@ -14,8 +14,10 @@
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
     message: `Happy Birthday mere bhai! 🎉\n\nZindagi mein hamesha aise hi muskurate reh, maze karte reh aur sabse zaroori... treat time pe dete reh! 😂\n\nTere jaisa dost milna mushkil hi nahi, namumkin hai. May this year bring you endless happiness, blockbuster success, good health, and tons of crazy road trips together! 🥂🚀`,
     sender: 'Tere Saare Yaar & Gang ❤️',
-    musicPreset: 'festive_synth',
-    customAudioData: null
+    musicPreset: 'happy_birthday_mp3', // default is our local HappyBirthday.mp3
+    musicLoop: true,                  // repeat music option
+    customAudioUrl: '',               // custom music link
+    customAudioData: null             // base64 data for uploaded files
   };
 
   // Fun Best Friend Roast & Wish Messages for Balloon Pop Game
@@ -67,6 +69,7 @@
 
   // --- STATE ---
   let appConfig = Object.assign({}, DEFAULT_CONFIG);
+  let isSharedRecipientView = false;
   let poppedCount = 0;
   let isCandleBlown = false;
   let isCakeCut = false;
@@ -76,6 +79,9 @@
   let currentPolaroidIndex = 0;
 
   // --- DOM ELEMENTS ---
+  const welcomeOverlay = document.getElementById('welcome-overlay');
+  const enterCelebrationBtn = document.getElementById('enter-celebration-btn');
+
   const headerNickname = document.getElementById('header-nickname');
   const displayName = document.getElementById('display-name');
   const displayTagline = document.getElementById('display-tagline');
@@ -89,8 +95,8 @@
   const saveSettingsBtn = document.getElementById('save-settings-btn');
   const resetSettingsBtn = document.getElementById('reset-settings-btn');
   const shareWebsiteBtn = document.getElementById('share-website-btn');
-  const shareUrlInput = document.getElementById('share-url-input');
-  const copyUrlBtn = document.getElementById('copy-url-btn');
+  const shareFriendUrlInput = document.getElementById('share-friend-url-input');
+  const copyFriendUrlBtn = document.getElementById('copy-friend-url-btn');
   const appToast = document.getElementById('app-toast');
 
   // Cake Elements
@@ -138,8 +144,11 @@
   const inputAvatarFile = document.getElementById('input-avatar-file');
   const inputAvatarUrl = document.getElementById('input-avatar-url');
   const inputMusicPreset = document.getElementById('input-music-preset');
+  const inputMusicLoop = document.getElementById('input-music-loop');
+  const inputAudioUrl = document.getElementById('input-audio-url');
   const inputAudioFile = document.getElementById('input-audio-file');
-  const customAudioUploadWrap = document.getElementById('custom-audio-upload-wrap');
+  const customAudioUrlWrap = document.getElementById('custom-audio-url-wrap');
+  const customAudioFileWrap = document.getElementById('custom-audio-file-wrap');
   const bgAudio = document.getElementById('bg-audio');
 
   // ==========================================================================
@@ -152,13 +161,16 @@
     initBalloons();
     renderPolaroids();
     setupEventListeners();
-    triggerWelcomeConfetti();
   }
 
   function loadConfigFromStorageOrUrl() {
-    // 1. Check URL query params first
     const params = new URLSearchParams(window.location.search);
     let loadedFromUrl = false;
+
+    // Check if opened as shared recipient view
+    if (params.get('mode') === 'view' || params.get('shared') === '1') {
+      isSharedRecipientView = true;
+    }
 
     if (params.get('name')) {
       appConfig.name = params.get('name');
@@ -188,11 +200,20 @@
       appConfig.avatar = params.get('avatar');
       loadedFromUrl = true;
     }
+    if (params.get('music_url')) {
+      appConfig.customAudioUrl = params.get('music_url');
+      appConfig.musicPreset = 'custom_url';
+      loadedFromUrl = true;
+    }
+    if (params.get('loop') !== null) {
+      appConfig.musicLoop = params.get('loop') === '1';
+      loadedFromUrl = true;
+    }
 
-    // 2. If not in URL, load from localStorage
+    // If not loaded from URL parameters, load from localStorage
     if (!loadedFromUrl) {
       try {
-        const saved = localStorage.getItem('bday_app_config');
+        const saved = localStorage.getItem('bday_app_config_v2');
         if (saved) {
           appConfig = Object.assign({}, DEFAULT_CONFIG, JSON.parse(saved));
         }
@@ -201,13 +222,19 @@
       }
     }
 
-    updateShareUrlInput();
+    // Hide edit options for recipient view
+    if (isSharedRecipientView) {
+      if (settingsBtn) settingsBtn.classList.add('hide-edit');
+      if (reopenSettingsBtn) reopenSettingsBtn.classList.add('hide-edit');
+    }
+
+    updateShareUrlInputs();
   }
 
   function saveConfig() {
     try {
-      localStorage.setItem('bday_app_config', JSON.stringify(appConfig));
-      updateShareUrlInput();
+      localStorage.setItem('bday_app_config_v2', JSON.stringify(appConfig));
+      updateShareUrlInputs();
       showToast('✨ Details saved successfully!');
     } catch (e) {
       console.error('Storage save error:', e);
@@ -235,30 +262,54 @@
     inputMessage.value = appConfig.message;
     inputSender.value = appConfig.sender;
     inputAvatarUrl.value = appConfig.avatar && appConfig.avatar.startsWith('http') ? appConfig.avatar : '';
-    inputMusicPreset.value = appConfig.musicPreset || 'festive_synth';
+    inputMusicPreset.value = appConfig.musicPreset || 'happy_birthday_mp3';
+    inputMusicLoop.checked = appConfig.musicLoop !== false;
+    inputAudioUrl.value = appConfig.customAudioUrl || '';
 
-    if (appConfig.musicPreset === 'custom') {
-      customAudioUploadWrap.style.display = 'block';
+    // Audio Loop Sync
+    bgAudio.loop = appConfig.musicLoop !== false;
+
+    // Show/Hide music input fields based on preset
+    updateMusicPresetVisibility();
+  }
+
+  function updateMusicPresetVisibility() {
+    const preset = inputMusicPreset.value;
+    if (preset === 'custom_url') {
+      customAudioUrlWrap.style.display = 'block';
+      customAudioFileWrap.style.display = 'none';
+    } else if (preset === 'custom_file') {
+      customAudioUrlWrap.style.display = 'none';
+      customAudioFileWrap.style.display = 'block';
     } else {
-      customAudioUploadWrap.style.display = 'none';
+      customAudioUrlWrap.style.display = 'none';
+      customAudioFileWrap.style.display = 'none';
     }
   }
 
-  function updateShareUrlInput() {
+  function updateShareUrlInputs() {
     const baseUrl = window.location.origin + window.location.pathname;
     const params = new URLSearchParams();
+    
+    // Shared Mode to HIDE edit button for recipient
+    params.set('mode', 'view');
     params.set('name', appConfig.name);
     params.set('nick', appConfig.nickname);
     params.set('age', appConfig.age);
     params.set('tag', appConfig.tagline);
     params.set('msg', appConfig.message);
     params.set('from', appConfig.sender);
+    params.set('loop', appConfig.musicLoop ? '1' : '0');
+
     if (appConfig.avatar && appConfig.avatar.startsWith('http')) {
       params.set('avatar', appConfig.avatar);
     }
+    if (appConfig.musicPreset === 'custom_url' && appConfig.customAudioUrl) {
+      params.set('music_url', appConfig.customAudioUrl);
+    }
 
     const shareUrl = `${baseUrl}?${params.toString()}`;
-    shareUrlInput.value = shareUrl;
+    shareFriendUrlInput.value = shareUrl;
   }
 
   // ==========================================================================
@@ -277,7 +328,6 @@
     return audioContext;
   }
 
-  // Play Sound Effects
   function playPopSound() {
     const ctx = getAudioContext();
     if (!ctx) return;
@@ -302,7 +352,6 @@
     const ctx = getAudioContext();
     if (!ctx) return;
     
-    // Whoosh / wind effect using modulated noise
     const bufferSize = ctx.sampleRate * 0.4;
     const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
     const data = buffer.getChannelData(0);
@@ -333,8 +382,7 @@
     const ctx = getAudioContext();
     if (!ctx) return;
 
-    // Cheerful arpeggio fanfare
-    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+    const notes = [523.25, 659.25, 783.99, 1046.50];
     notes.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
@@ -370,40 +418,20 @@
     });
   }
 
-  // Synthesized "Happy Birthday" Melody
+  // Synthesized Chimes Melody
   const BDAY_MELODY = [
-    { note: 261.63, dur: 0.3 }, // C4 Hap-
-    { note: 261.63, dur: 0.3 }, // C4 py
-    { note: 293.66, dur: 0.6 }, // D4 Birth-
-    { note: 261.63, dur: 0.6 }, // C4 day
-    { note: 349.23, dur: 0.6 }, // F4 to
-    { note: 329.63, dur: 1.0 }, // E4 you
-
-    { note: 261.63, dur: 0.3 }, // C4 Hap-
-    { note: 261.63, dur: 0.3 }, // C4 py
-    { note: 293.66, dur: 0.6 }, // D4 Birth-
-    { note: 261.63, dur: 0.6 }, // C4 day
-    { note: 392.00, dur: 0.6 }, // G4 to
-    { note: 349.23, dur: 1.0 }, // F4 you
-
-    { note: 261.63, dur: 0.3 }, // C4 Hap-
-    { note: 261.63, dur: 0.3 }, // C4 py
-    { note: 523.25, dur: 0.6 }, // C5 Birth-
-    { note: 440.00, dur: 0.6 }, // A4 day
-    { note: 349.23, dur: 0.6 }, // F4 dear
-    { note: 329.63, dur: 0.6 }, // E4 [Friend]
-    { note: 293.66, dur: 1.0 }, // D4 Name
-
-    { note: 466.16, dur: 0.3 }, // Bb4 Hap-
-    { note: 466.16, dur: 0.3 }, // Bb4 py
-    { note: 440.00, dur: 0.6 }, // A4 Birth-
-    { note: 349.23, dur: 0.6 }, // F4 day
-    { note: 392.00, dur: 0.6 }, // G4 to
-    { note: 349.23, dur: 1.2 }  // F4 you
+    { note: 261.63, dur: 0.3 }, { note: 261.63, dur: 0.3 }, { note: 293.66, dur: 0.6 },
+    { note: 261.63, dur: 0.6 }, { note: 349.23, dur: 0.6 }, { note: 329.63, dur: 1.0 },
+    { note: 261.63, dur: 0.3 }, { note: 261.63, dur: 0.3 }, { note: 293.66, dur: 0.6 },
+    { note: 261.63, dur: 0.6 }, { note: 392.00, dur: 0.6 }, { note: 349.23, dur: 1.0 },
+    { note: 261.63, dur: 0.3 }, { note: 261.63, dur: 0.3 }, { note: 523.25, dur: 0.6 },
+    { note: 440.00, dur: 0.6 }, { note: 349.23, dur: 0.6 }, { note: 329.63, dur: 0.6 },
+    { note: 293.66, dur: 1.0 }, { note: 466.16, dur: 0.3 }, { note: 466.16, dur: 0.3 },
+    { note: 440.00, dur: 0.6 }, { note: 349.23, dur: 0.6 }, { note: 392.00, dur: 0.6 },
+    { note: 349.23, dur: 1.2 }
   ];
 
   let currentNoteIndex = 0;
-
   function startSynthMelody() {
     stopSynthMelody();
     const ctx = getAudioContext();
@@ -416,7 +444,7 @@
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
-      osc.type = appConfig.musicPreset === 'party_beat' ? 'sawtooth' : 'sine';
+      osc.type = 'sine';
       osc.frequency.setValueAtTime(noteItem.note, ctx.currentTime);
 
       gain.gain.setValueAtTime(0.25, ctx.currentTime);
@@ -429,6 +457,10 @@
       osc.stop(ctx.currentTime + noteItem.dur);
 
       currentNoteIndex = (currentNoteIndex + 1) % BDAY_MELODY.length;
+      if (currentNoteIndex === 0 && !appConfig.musicLoop) {
+        toggleMusic(false);
+        return;
+      }
       synthMusicInterval = setTimeout(playNextNote, noteItem.dur * 1000 + 40);
     }
 
@@ -442,24 +474,50 @@
     }
   }
 
-  function toggleMusic() {
-    const ctx = getAudioContext();
-    isMusicPlaying = !isMusicPlaying;
+  function playActiveMusic() {
+    getAudioContext();
+    isMusicPlaying = true;
+    musicBtn.classList.add('playing');
 
-    if (isMusicPlaying) {
-      musicBtn.classList.add('playing');
-      showToast('🎵 Birthday Song Playing!');
+    bgAudio.loop = appConfig.musicLoop !== false;
 
-      if (appConfig.musicPreset === 'custom' && appConfig.customAudioData) {
-        bgAudio.src = appConfig.customAudioData;
-        bgAudio.play().catch(e => console.log('Audio play blocked:', e));
-      } else {
-        startSynthMelody();
-      }
-    } else {
-      musicBtn.classList.remove('playing');
-      stopSynthMelody();
+    if (appConfig.musicPreset === 'festive_synth') {
       bgAudio.pause();
+      startSynthMelody();
+    } else {
+      stopSynthMelody();
+      let targetSrc = 'audio/HappyBirthday.mp3';
+
+      if (appConfig.musicPreset === 'custom_url' && appConfig.customAudioUrl) {
+        targetSrc = appConfig.customAudioUrl;
+      } else if (appConfig.musicPreset === 'custom_file' && appConfig.customAudioData) {
+        targetSrc = appConfig.customAudioData;
+      }
+
+      if (bgAudio.src !== targetSrc) {
+        bgAudio.src = targetSrc;
+      }
+      
+      bgAudio.play().catch(e => {
+        console.log('Audio autoplay info:', e);
+      });
+    }
+  }
+
+  function pauseActiveMusic() {
+    isMusicPlaying = false;
+    musicBtn.classList.remove('playing');
+    stopSynthMelody();
+    bgAudio.pause();
+  }
+
+  function toggleMusic(forceState) {
+    const shouldPlay = forceState !== undefined ? forceState : !isMusicPlaying;
+    if (shouldPlay) {
+      playActiveMusic();
+      showToast('🎵 Birthday Song Playing!');
+    } else {
+      pauseActiveMusic();
       showToast('🔇 Music Paused');
     }
   }
@@ -482,7 +540,6 @@
       b.style.background = colorScheme.bg;
       b.style.color = colorScheme.text;
 
-      // Random positioning within arena
       const leftPos = 15 + Math.random() * (boxWidth - 90);
       const topPos = 20 + Math.random() * (boxHeight - 120);
       b.style.left = `${leftPos}px`;
@@ -492,7 +549,6 @@
       const msgData = BALLOON_MESSAGES[i % BALLOON_MESSAGES.length];
       b.innerHTML = `<span>${msgData.emoji}</span>`;
 
-      // Tap / Click to Pop
       b.addEventListener('pointerdown', (e) => {
         e.preventDefault();
         popBalloon(b, msgData, e.clientX, e.clientY);
@@ -508,7 +564,6 @@
 
     playPopSound();
     
-    // Confetti burst right at balloon coordinates
     if (window.confetti) {
       window.confetti({
         particleCount: 35,
@@ -521,7 +576,6 @@
       });
     }
 
-    // Balloon pop animation
     balloonElement.style.transform = 'scale(1.4)';
     balloonElement.style.opacity = '0';
     setTimeout(() => {
@@ -531,7 +585,6 @@
     poppedCount++;
     poppedCountEl.textContent = poppedCount;
 
-    // Show popup modal with roast/wish
     setTimeout(() => {
       balloonModalEmoji.textContent = msgData.emoji + '💥';
       balloonModalTitle.textContent = msgData.title;
@@ -542,7 +595,7 @@
     if (poppedCount === 6) {
       setTimeout(() => {
         triggerGrandConfetti();
-        showToast('🎉 Wow! All balloons popped! Master Level Achieved!');
+        showToast('🎉 All balloons popped! Master Level Achieved!');
       }, 500);
     }
   }
@@ -563,7 +616,6 @@
     cakeInstructionText.innerHTML = '✨ <strong>Candle blown!</strong> Now tap "Cut Cake" or tap the knife to slice it!';
     showToast('💨 Fffff! Candle blown! Make a wish!');
 
-    // Sparkle effect
     if (window.confetti) {
       window.confetti({
         particleCount: 25,
@@ -584,7 +636,6 @@
     cutCakeBtn.disabled = true;
     cutCakeBtn.textContent = '✅ Cake Sliced!';
 
-    // Knife Animation
     cakeKnife.classList.add('cutting-action');
     playCakeCutSound();
 
@@ -593,9 +644,8 @@
       cakeSuccessBanner.classList.add('active');
       triggerGrandConfetti();
 
-      // Start music automatically if not playing
       if (!isMusicPlaying) {
-        toggleMusic();
+        toggleMusic(true);
       }
 
       showToast('🍰 YAY! Cake cut successfully! Treat time!');
@@ -610,7 +660,6 @@
     polaroidDots.innerHTML = '';
 
     DEFAULT_MEMORIES.forEach((item, idx) => {
-      // Card
       const card = document.createElement('div');
       card.className = 'polaroid-card';
       card.style.setProperty('--tape-tilt', `${(idx % 2 === 0 ? 2 : -2)}deg`);
@@ -627,7 +676,6 @@
       `;
       polaroidTrack.appendChild(card);
 
-      // Dot
       const dot = document.createElement('div');
       dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
       dot.addEventListener('click', () => {
@@ -636,10 +684,9 @@
       polaroidDots.appendChild(dot);
     });
 
-    // Update active dot on scroll
     polaroidTrack.addEventListener('scroll', () => {
       const scrollLeft = polaroidTrack.scrollLeft;
-      const cardWidth = 276; // 260 width + 16 gap
+      const cardWidth = 276;
       const activeIdx = Math.round(scrollLeft / cardWidth);
       if (activeIdx !== currentPolaroidIndex && activeIdx >= 0 && activeIdx < DEFAULT_MEMORIES.length) {
         currentPolaroidIndex = activeIdx;
@@ -685,18 +732,6 @@
   // ==========================================================================
   // 7. CONFETTI & VISUAL EFFECTS
   // ==========================================================================
-  function triggerWelcomeConfetti() {
-    if (!window.confetti) return;
-    setTimeout(() => {
-      window.confetti({
-        particleCount: 50,
-        spread: 70,
-        origin: { y: 0.3 },
-        colors: ['#ff2a85', '#ffc837', '#00f2fe', '#ffd700']
-      });
-    }, 600);
-  }
-
   function triggerGrandConfetti() {
     if (!window.confetti) return;
     const end = Date.now() + 1500;
@@ -755,8 +790,15 @@
   // 9. EVENT LISTENERS SETUP
   // ==========================================================================
   function setupEventListeners() {
+    // 0. Welcome Volume Guide Enter Button
+    enterCelebrationBtn.addEventListener('click', () => {
+      welcomeOverlay.classList.add('hidden');
+      toggleMusic(true);
+      triggerGrandConfetti();
+    });
+
     // Music Controls
-    musicBtn.addEventListener('click', toggleMusic);
+    musicBtn.addEventListener('click', () => toggleMusic());
 
     // Cake Controls
     candleWrap.addEventListener('click', handleBlowCandle);
@@ -793,6 +835,7 @@
 
     // Settings Modal
     const openSettings = () => {
+      if (isSharedRecipientView) return;
       settingsModal.classList.add('active');
       renderAppConfig();
     };
@@ -800,8 +843,8 @@
       settingsModal.classList.remove('active');
     };
 
-    settingsBtn.addEventListener('click', openSettings);
-    reopenSettingsBtn.addEventListener('click', openSettings);
+    if (settingsBtn) settingsBtn.addEventListener('click', openSettings);
+    if (reopenSettingsBtn) reopenSettingsBtn.addEventListener('click', openSettings);
     closeSettingsBtn.addEventListener('click', closeSettings);
     settingsModal.addEventListener('click', (e) => {
       if (e.target === settingsModal) closeSettings();
@@ -821,13 +864,9 @@
       }
     });
 
-    // Handle Custom Music Preset Change
-    inputMusicPreset.addEventListener('change', (e) => {
-      if (e.target.value === 'custom') {
-        customAudioUploadWrap.style.display = 'block';
-      } else {
-        customAudioUploadWrap.style.display = 'none';
-      }
+    // Handle Music Preset Dropdown Change
+    inputMusicPreset.addEventListener('change', () => {
+      updateMusicPresetVisibility();
     });
 
     // Handle Custom Audio File Upload
@@ -837,7 +876,7 @@
         const reader = new FileReader();
         reader.onload = (event) => {
           appConfig.customAudioData = event.target.result;
-          showToast('🎵 Custom audio file uploaded!');
+          showToast('🎵 Custom audio file ready! Click "Save" to apply.');
         };
         reader.readAsDataURL(file);
       }
@@ -855,12 +894,20 @@
       if (inputAvatarUrl.value.trim()) {
         appConfig.avatar = inputAvatarUrl.value.trim();
       }
+      
       appConfig.musicPreset = inputMusicPreset.value;
+      appConfig.musicLoop = inputMusicLoop.checked;
+      appConfig.customAudioUrl = inputAudioUrl.value.trim();
 
       saveConfig();
       renderAppConfig();
       closeSettings();
       triggerGrandConfetti();
+
+      // Restart music with updated settings if playing
+      if (isMusicPlaying) {
+        playActiveMusic();
+      }
     });
 
     // Reset Settings
@@ -876,28 +923,32 @@
 
     // Share Website Button
     shareWebsiteBtn.addEventListener('click', () => {
-      updateShareUrlInput();
+      updateShareUrlInputs();
       if (navigator.share) {
         navigator.share({
           title: `Happy Birthday ${appConfig.name}! 🎉`,
           text: `A special birthday wish website created for ${appConfig.name}! Check it out:`,
-          url: shareUrlInput.value
+          url: shareFriendUrlInput.value
         }).catch(() => {
-          openSettings();
+          if (!isSharedRecipientView) openSettings();
         });
       } else {
-        openSettings();
-        shareUrlInput.select();
-        showToast('🔗 Shareable link ready in settings!');
+        if (!isSharedRecipientView) {
+          openSettings();
+          shareFriendUrlInput.select();
+        } else {
+          navigator.clipboard.writeText(shareFriendUrlInput.value || window.location.href);
+        }
+        showToast('🔗 Shareable link ready!');
       }
     });
 
-    // Copy URL
-    copyUrlBtn.addEventListener('click', () => {
-      shareUrlInput.select();
-      shareUrlInput.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(shareUrlInput.value).then(() => {
-        showToast('📋 Link copied to clipboard!');
+    // Copy Friend Link
+    copyFriendUrlBtn.addEventListener('click', () => {
+      shareFriendUrlInput.select();
+      shareFriendUrlInput.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(shareFriendUrlInput.value).then(() => {
+        showToast('📋 Friend Link copied! (Edit option is hidden)');
       }).catch(() => {
         document.execCommand('copy');
         showToast('📋 Link copied!');

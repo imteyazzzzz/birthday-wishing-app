@@ -8,7 +8,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
   <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -20,8 +20,38 @@
   <!-- Canvas for Confetti & Particle Effects -->
   <canvas id="fireworks-canvas"></canvas>
 
-  <!-- Ambient Floating Background Particles & Balloons Container -->
+  <!-- Ambient Floating Background Particles Container -->
   <div id="ambient-container" aria-hidden="true"></div>
+
+  <!-- 0. WELCOME / VOLUME GUIDE SPLASH OVERLAY -->
+  <div class="welcome-overlay" id="welcome-overlay">
+    <div class="welcome-guide-card">
+      <div class="sound-wave-icon-wrap">
+        <div class="speaker-emoji">🔊</div>
+        <div class="pulse-sound-waves">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      
+      <span class="welcome-badge">AUDIO EXPERIENCE</span>
+      <h2 class="welcome-title">Turn Up the Volume! 📢</h2>
+      <p class="welcome-desc">
+        Behtareen birthday experience ke liye apne <strong>phone ka volume full karein</strong> ya <strong>headphones</strong> use karein! 🎧✨
+      </p>
+
+      <div class="volume-meter-bar">
+        <span class="vol-label">Volume Level:</span>
+        <div class="vol-track">
+          <div class="vol-fill"></div>
+        </div>
+        <span class="vol-pct">100% 🔥</span>
+      </div>
+
+      <button id="enter-celebration-btn" class="action-btn enter-btn">
+        <span>🎉</span> Enter Celebration <span>✨</span>
+      </button>
+    </div>
+  </div>
 
   <!-- Top Floating Controls Bar -->
   <header class="top-nav">
@@ -38,7 +68,7 @@
         </div>
       </button>
 
-      <!-- Settings / Customizer Button -->
+      <!-- Settings / Customizer Button (Hidden in shared view) -->
       <button id="settings-btn" class="icon-btn customize-btn" title="Customize for your friend" aria-label="Open Settings">
         <span class="gear-icon">⚙️</span>
         <span class="btn-label">Edit</span>
@@ -248,8 +278,9 @@
       
       <div class="footer-actions">
         <button id="share-website-btn" class="action-btn share-btn">
-          <span>📤</span> Share This Wish
+          <span>📤</span> Share Wish With Friend
         </button>
+        <!-- Reopen settings (Hidden in shared view) -->
         <button id="reopen-settings-btn" class="sub-btn">
           <span>⚙️</span> Edit Details for your Friend
         </button>
@@ -278,7 +309,7 @@
           <span class="sheet-icon">🎨</span>
           <div>
             <h3>Personalize Birthday Website</h3>
-            <p>Apne friend ke hisaab se live details change karein</p>
+            <p>Apne friend ke hisaab se live details customize karein</p>
           </div>
         </div>
         <button id="close-settings-btn" class="close-sheet-btn" aria-label="Close settings">&times;</button>
@@ -327,19 +358,36 @@
           </div>
         </div>
 
-        <!-- Custom Music Selector -->
+        <!-- Custom Music Selector & Options -->
         <div class="form-group">
-          <label>Background Song / Audio</label>
+          <label>Background Song / Music Source</label>
           <div class="audio-selection-wrap">
             <select id="input-music-preset">
-              <option value="festive_synth">🎹 Upbeat Happy Birthday Synth Chimes (Built-in)</option>
-              <option value="party_beat">🥁 Celebration Party Melodies (Built-in)</option>
-              <option value="custom">📁 Upload Custom MP3 / Audio File</option>
+              <option value="happy_birthday_mp3">🎵 HappyBirthday.mp3 (Official Birthday Track)</option>
+              <option value="custom_url">🔗 Play from Custom Online Music URL / Link</option>
+              <option value="custom_file">📁 Upload Local MP3 File</option>
+              <option value="festive_synth">🎹 Upbeat Happy Birthday Synth Chimes</option>
             </select>
-            <div id="custom-audio-upload-wrap" style="display:none; margin-top: 8px;">
+            
+            <!-- Custom Online Music URL input -->
+            <div id="custom-audio-url-wrap" style="display:none; margin-top: 8px;">
+              <input type="url" id="input-audio-url" placeholder="https://example.com/mysong.mp3">
+            </div>
+
+            <!-- Custom File Upload input -->
+            <div id="custom-audio-file-wrap" style="display:none; margin-top: 8px;">
               <input type="file" id="input-audio-file" accept="audio/*">
             </div>
           </div>
+        </div>
+
+        <!-- Repeat / Loop Music Option -->
+        <div class="form-group form-toggle-group">
+          <label class="toggle-container" for="input-music-loop">
+            <input type="checkbox" id="input-music-loop" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">🔁 Repeat / Loop Music Continuously</span>
+          </label>
         </div>
 
         <!-- Action Buttons -->
@@ -348,23 +396,24 @@
             💾 Save & Apply Live
           </button>
           <button id="reset-settings-btn" class="sub-btn reset-btn">
-            🔄 Reset to Default
+            🔄 Reset
           </button>
         </div>
 
+        <!-- Share Links for Friend (No Edit) vs Admin -->
         <div class="share-link-box">
-          <label>🔗 Shareable Link (Auto-saves your changes):</label>
+          <label>🎁 Friend's Share Link (Edit button bilkul hidden rahega):</label>
           <div class="copy-input-row">
-            <input type="text" id="share-url-input" readonly>
-            <button id="copy-url-btn" class="mini-btn highlight">Copy Link</button>
+            <input type="text" id="share-friend-url-input" readonly>
+            <button id="copy-friend-url-btn" class="mini-btn highlight">Copy Link</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Audio Element for Custom Files -->
-  <audio id="bg-audio" loop preload="auto"></audio>
+  <!-- Audio Element for MP3 / Custom Files -->
+  <audio id="bg-audio" loop preload="auto" src="audio/HappyBirthday.mp3"></audio>
 
   <!-- JavaScript App Logic -->
   <script src="script.js"></script>
