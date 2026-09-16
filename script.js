@@ -1,69 +1,82 @@
 /* ==========================================================================
-   BIRTHDAY CELEBRATION WEB APP - ENHANCED SCRIPT
+   BIRTHDAY CELEBRATION WEB APP - SVG & ENGLISH EDITION SCRIPT
    ========================================================================== */
 
 (function () {
   'use strict';
 
-  // --- DEFAULT DATA CONFIG ---
+  // --- DEFAULT DATA CONFIG (ENGLISH) ---
   const DEFAULT_CONFIG = {
     name: 'Rahul',
-    nickname: 'The Legend',
-    age: '21 🔥',
-    tagline: '✨ The Official Legend of the Gang ✨',
+    nickname: 'Superstar',
+    age: '21',
+    tagline: 'The Legend & Main Character',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80',
-    message: `Happy Birthday mere bhai! 🎉\n\nZindagi mein hamesha aise hi muskurate reh, maze karte reh aur sabse zaroori... treat time pe dete reh! 😂\n\nTere jaisa dost milna mushkil hi nahi, namumkin hai. May this year bring you endless happiness, blockbuster success, good health, and tons of crazy road trips together! 🥂🚀`,
-    sender: 'Tere Saare Yaar & Gang ❤️',
-    musicPreset: 'happy_birthday_mp3', // default is our local HappyBirthday.mp3
-    musicLoop: true,                  // repeat music option
-    customAudioUrl: '',               // custom music link
-    customAudioData: null             // base64 data for uploaded files
+    message: `Happy Birthday my dear friend!
+
+Wishing you a day filled with boundless joy, laughter, and everything your heart desires! Finding a genuine friend like you is truly special. May this year bless you with tremendous success, great health, unmatched happiness, and countless more memories for us to cherish together!
+
+Cheers to another fantastic year of our friendship!`,
+    sender: 'Your Best Friends & Gang',
+    musicPreset: 'happy_birthday_mp3', // local HappyBirthday.mp3
+    musicLoop: true,
+    customAudioUrl: '',
+    customAudioData: null
   };
 
-  // Fun Best Friend Roast & Wish Messages for Balloon Pop Game
+  // Fun Best Friend Birthday Notes for Balloon Pop Game (English)
   const BALLOON_MESSAGES = [
-    { emoji: '🍕', title: 'Treat Alert!', msg: 'Bhai birthday ki party kab aur kahan de raha hai? Date fix kar jaldi!' },
-    { emoji: '👑', title: 'Born Legend!', msg: 'Aaj ke din ek superstar paida hua tha... aur dusra tu hai! Happy Birthday!' },
-    { emoji: '🧠', title: 'Wisdom Check!', msg: 'Umar toh ek saal aur badh gayi, par akal kab aayegi mere bhai? 😂' },
-    { emoji: '🚀', title: 'Infinite Success!', msg: 'May all your dreams, startups & crazy plans turn into massive success this year!' },
-    { emoji: '❤️', title: 'BFF Forever!', msg: 'Duniya idhar ki udhar ho jaye, par apni dosti hamesha No. 1 rahegi!' },
-    { emoji: '🎂', title: 'Cake Alert!', msg: 'Sabse pehla aur sabse bada cake ka piece mere liye reserved hai boss!' }
+    { title: 'Party Alert!', msg: 'When and where are we having the grand birthday celebration? Lock the date ASAP!' },
+    { title: 'Born Superstar!', msg: 'A true legend was born on this special day. Wishing you endless glory and success!' },
+    { title: 'Leveling Up!', msg: 'Another year older, wiser, and definitely cooler! Cheers to leveling up!' },
+    { title: 'Sky is the Limit!', msg: 'May all your grand ambitions, creative dreams, and goals come true this year!' },
+    { title: 'Friends Forever!', msg: 'Through all the highs and adventures, our friendship remains unmatched!' },
+    { title: 'Cake Time!', msg: 'The biggest, sweetest slice of cake is officially reserved for me!' }
   ];
 
   const BALLOON_COLORS = [
-    { bg: 'linear-gradient(135deg, #ff2a85, #ff7300)', text: '#fff' },
-    { bg: 'linear-gradient(135deg, #00c6ff, #0072ff)', text: '#fff' },
-    { bg: 'linear-gradient(135deg, #f7971e, #ffd200)', text: '#111' },
-    { bg: 'linear-gradient(135deg, #8e2de2, #4a00e0)', text: '#fff' },
-    { bg: 'linear-gradient(135deg, #11998e, #38ef7d)', text: '#111' },
-    { bg: 'linear-gradient(135deg, #ff0844, #ffb199)', text: '#fff' }
+    { bg: 'linear-gradient(135deg, #ff2a85, #ff7300)', iconColor: '#fff' },
+    { bg: 'linear-gradient(135deg, #00c6ff, #0072ff)', iconColor: '#fff' },
+    { bg: 'linear-gradient(135deg, #f7971e, #ffd200)', iconColor: '#111' },
+    { bg: 'linear-gradient(135deg, #8e2de2, #4a00e0)', iconColor: '#fff' },
+    { bg: 'linear-gradient(135deg, #11998e, #38ef7d)', iconColor: '#111' },
+    { bg: 'linear-gradient(135deg, #ff0844, #ffb199)', iconColor: '#fff' }
   ];
 
-  // Sample Polaroid Memories
+  const BALLOON_SVG_ICONS = [
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>',
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>',
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>',
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
+    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
+  ];
+
+  // Polaroid Memories (English)
   const DEFAULT_MEMORIES = [
     {
       img: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=500&auto=format&fit=crop&q=80',
-      title: 'Midnight Chaos 🌙',
-      date: 'Old Memories • 2:00 AM',
-      caption: 'Jab bina plan ke gedi maarne nikalte the!'
+      title: 'Midnight Adventures',
+      date: 'Classic Moments • 2:00 AM',
+      caption: 'When spontaneous late night plans became our best memories!'
     },
     {
       img: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=500&auto=format&fit=crop&q=80',
-      title: 'The Squad Goals 🤙',
-      date: 'Chai Tapri Session',
-      caption: 'Har musibat mein saath khade rehne wale yaar!'
+      title: 'Squad Goals Forever',
+      date: 'Hangout Sessions',
+      caption: 'Standing by each other through thick and thin!'
     },
     {
       img: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=500&auto=format&fit=crop&q=80',
-      title: 'Party Mode ON 🕺',
+      title: 'Party Mode Activated',
       date: 'Epic Celebration',
-      caption: 'Dance moves jo kisi comedy movie se kam nahi the!'
+      caption: 'Laughter, joy, and dancing that made history!'
     },
     {
       img: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=80',
-      title: 'The Birthday Star ✨',
-      date: 'Main Character Vibe',
-      caption: 'Aaj ka din sirf aur sirf tere naam!'
+      title: 'The Birthday Superstar',
+      date: 'Main Character Energy',
+      caption: 'Today is entirely dedicated to you and your greatness!'
     }
   ];
 
@@ -116,7 +129,6 @@
   const balloonModalOverlay = document.getElementById('balloon-modal-overlay');
   const balloonModalTitle = document.getElementById('balloon-modal-title');
   const balloonModalMsg = document.getElementById('balloon-modal-message');
-  const balloonModalEmoji = document.getElementById('balloon-modal-emoji');
   const balloonModalClose = document.getElementById('balloon-modal-close');
 
   // Polaroid Carousel Elements
@@ -167,7 +179,6 @@
     const params = new URLSearchParams(window.location.search);
     let loadedFromUrl = false;
 
-    // Check if opened as shared recipient view
     if (params.get('mode') === 'view' || params.get('shared') === '1') {
       isSharedRecipientView = true;
     }
@@ -210,10 +221,9 @@
       loadedFromUrl = true;
     }
 
-    // If not loaded from URL parameters, load from localStorage
     if (!loadedFromUrl) {
       try {
-        const saved = localStorage.getItem('bday_app_config_v2');
+        const saved = localStorage.getItem('bday_app_config_en');
         if (saved) {
           appConfig = Object.assign({}, DEFAULT_CONFIG, JSON.parse(saved));
         }
@@ -222,7 +232,6 @@
       }
     }
 
-    // Hide edit options for recipient view
     if (isSharedRecipientView) {
       if (settingsBtn) settingsBtn.classList.add('hide-edit');
       if (reopenSettingsBtn) reopenSettingsBtn.classList.add('hide-edit');
@@ -233,20 +242,20 @@
 
   function saveConfig() {
     try {
-      localStorage.setItem('bday_app_config_v2', JSON.stringify(appConfig));
+      localStorage.setItem('bday_app_config_en', JSON.stringify(appConfig));
       updateShareUrlInputs();
-      showToast('✨ Details saved successfully!');
+      showToast('Details saved successfully!');
     } catch (e) {
       console.error('Storage save error:', e);
     }
   }
 
   function renderAppConfig() {
-    document.title = `Happy Birthday ${appConfig.name}! 🎉🎂`;
-    headerNickname.textContent = appConfig.nickname || `${appConfig.name} Yaar`;
+    document.title = `Happy Birthday ${appConfig.name}!`;
+    headerNickname.textContent = appConfig.nickname || `${appConfig.name}`;
     displayName.textContent = (appConfig.name || 'Rahul').toUpperCase();
-    displayTagline.textContent = appConfig.tagline || '✨ The Official Legend of the Gang ✨';
-    displayAge.textContent = appConfig.age || 'Forever Young 🔥';
+    displayTagline.textContent = appConfig.tagline || 'The Legend & Main Character';
+    displayAge.textContent = appConfig.age || '21';
     displayAvatar.src = appConfig.avatar || DEFAULT_CONFIG.avatar;
 
     letterFriendName.textContent = appConfig.name || 'Rahul';
@@ -266,10 +275,7 @@
     inputMusicLoop.checked = appConfig.musicLoop !== false;
     inputAudioUrl.value = appConfig.customAudioUrl || '';
 
-    // Audio Loop Sync
     bgAudio.loop = appConfig.musicLoop !== false;
-
-    // Show/Hide music input fields based on preset
     updateMusicPresetVisibility();
   }
 
@@ -291,7 +297,7 @@
     const baseUrl = window.location.origin + window.location.pathname;
     const params = new URLSearchParams();
     
-    // Shared Mode to HIDE edit button for recipient
+    // Shared Mode to hide edit controls for friend
     params.set('mode', 'view');
     params.set('name', appConfig.name);
     params.set('nick', appConfig.nickname);
@@ -515,10 +521,10 @@
     const shouldPlay = forceState !== undefined ? forceState : !isMusicPlaying;
     if (shouldPlay) {
       playActiveMusic();
-      showToast('🎵 Birthday Song Playing!');
+      showToast('Birthday Music Playing!');
     } else {
       pauseActiveMusic();
-      showToast('🔇 Music Paused');
+      showToast('Music Paused');
     }
   }
 
@@ -538,7 +544,7 @@
       b.className = 'game-balloon';
       const colorScheme = BALLOON_COLORS[i % BALLOON_COLORS.length];
       b.style.background = colorScheme.bg;
-      b.style.color = colorScheme.text;
+      b.style.color = colorScheme.iconColor;
 
       const leftPos = 15 + Math.random() * (boxWidth - 90);
       const topPos = 20 + Math.random() * (boxHeight - 120);
@@ -547,7 +553,7 @@
       b.style.animationDelay = `${(i * 0.4).toFixed(1)}s`;
 
       const msgData = BALLOON_MESSAGES[i % BALLOON_MESSAGES.length];
-      b.innerHTML = `<span>${msgData.emoji}</span>`;
+      b.innerHTML = BALLOON_SVG_ICONS[i % BALLOON_SVG_ICONS.length];
 
       b.addEventListener('pointerdown', (e) => {
         e.preventDefault();
@@ -586,7 +592,6 @@
     poppedCountEl.textContent = poppedCount;
 
     setTimeout(() => {
-      balloonModalEmoji.textContent = msgData.emoji + '💥';
       balloonModalTitle.textContent = msgData.title;
       balloonModalMsg.textContent = msgData.msg;
       balloonModalOverlay.classList.add('active');
@@ -595,7 +600,7 @@
     if (poppedCount === 6) {
       setTimeout(() => {
         triggerGrandConfetti();
-        showToast('🎉 All balloons popped! Master Level Achieved!');
+        showToast('All balloons popped! True Celebration Champion!');
       }, 500);
     }
   }
@@ -613,8 +618,8 @@
     cutCakeBtn.disabled = false;
     cutCakeBtn.classList.add('highlight');
 
-    cakeInstructionText.innerHTML = '✨ <strong>Candle blown!</strong> Now tap "Cut Cake" or tap the knife to slice it!';
-    showToast('💨 Fffff! Candle blown! Make a wish!');
+    cakeInstructionText.innerHTML = '<strong>Candle blown!</strong> Now tap "Cut Cake" or tap the knife to slice it!';
+    showToast('Candle blown! Make a special wish!');
 
     if (window.confetti) {
       window.confetti({
@@ -634,7 +639,7 @@
 
     isCakeCut = true;
     cutCakeBtn.disabled = true;
-    cutCakeBtn.textContent = '✅ Cake Sliced!';
+    cutCakeBtn.textContent = 'Cake Sliced!';
 
     cakeKnife.classList.add('cutting-action');
     playCakeCutSound();
@@ -648,7 +653,7 @@
         toggleMusic(true);
       }
 
-      showToast('🍰 YAY! Cake cut successfully! Treat time!');
+      showToast('Cake cut successfully! Party time!');
     }, 450);
   }
 
@@ -725,7 +730,7 @@
     setTimeout(() => {
       letterCard.classList.add('active');
       letterCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      showToast('💌 Secret Birthday Wish Unlocked!');
+      showToast('Special Birthday Letter Unlocked!');
     }, 300);
   }
 
@@ -790,7 +795,7 @@
   // 9. EVENT LISTENERS SETUP
   // ==========================================================================
   function setupEventListeners() {
-    // 0. Welcome Volume Guide Enter Button
+    // Welcome Enter Button
     enterCelebrationBtn.addEventListener('click', () => {
       welcomeOverlay.classList.add('hidden');
       toggleMusic(true);
@@ -809,7 +814,7 @@
     // Balloon Arena Controls
     spawnBalloonsBtn.addEventListener('click', () => {
       initBalloons();
-      showToast('🎈 New batch of balloons spawned!');
+      showToast('New balloons spawned!');
     });
 
     balloonModalClose.addEventListener('click', () => {
@@ -858,7 +863,7 @@
         reader.onload = (event) => {
           appConfig.avatar = event.target.result;
           inputAvatarUrl.value = '';
-          showToast('📸 Photo loaded! Click "Save" to apply.');
+          showToast('Photo uploaded! Click "Save" to apply.');
         };
         reader.readAsDataURL(file);
       }
@@ -876,7 +881,7 @@
         const reader = new FileReader();
         reader.onload = (event) => {
           appConfig.customAudioData = event.target.result;
-          showToast('🎵 Custom audio file ready! Click "Save" to apply.');
+          showToast('Custom audio file loaded! Click "Save" to apply.');
         };
         reader.readAsDataURL(file);
       }
@@ -904,7 +909,6 @@
       closeSettings();
       triggerGrandConfetti();
 
-      // Restart music with updated settings if playing
       if (isMusicPlaying) {
         playActiveMusic();
       }
@@ -912,12 +916,12 @@
 
     // Reset Settings
     resetSettingsBtn.addEventListener('click', () => {
-      if (confirm('Kya aap saare details default par reset karna chahte hain?')) {
+      if (confirm('Are you sure you want to reset all details to default?')) {
         appConfig = Object.assign({}, DEFAULT_CONFIG);
         saveConfig();
         renderAppConfig();
         closeSettings();
-        showToast('🔄 Reset to default values!');
+        showToast('Reset to default values!');
       }
     });
 
@@ -926,8 +930,8 @@
       updateShareUrlInputs();
       if (navigator.share) {
         navigator.share({
-          title: `Happy Birthday ${appConfig.name}! 🎉`,
-          text: `A special birthday wish website created for ${appConfig.name}! Check it out:`,
+          title: `Happy Birthday ${appConfig.name}!`,
+          text: `A special birthday celebration website created for ${appConfig.name}! Check it out:`,
           url: shareFriendUrlInput.value
         }).catch(() => {
           if (!isSharedRecipientView) openSettings();
@@ -939,7 +943,7 @@
         } else {
           navigator.clipboard.writeText(shareFriendUrlInput.value || window.location.href);
         }
-        showToast('🔗 Shareable link ready!');
+        showToast('Shareable link ready!');
       }
     });
 
@@ -948,10 +952,10 @@
       shareFriendUrlInput.select();
       shareFriendUrlInput.setSelectionRange(0, 99999);
       navigator.clipboard.writeText(shareFriendUrlInput.value).then(() => {
-        showToast('📋 Friend Link copied! (Edit option is hidden)');
+        showToast('Friend Link copied! (Edit options hidden)');
       }).catch(() => {
         document.execCommand('copy');
-        showToast('📋 Link copied!');
+        showToast('Link copied!');
       });
     });
   }

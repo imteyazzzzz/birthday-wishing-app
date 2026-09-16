@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday Bestie! 🎉🎂</title>
+  <title>Happy Birthday! - Celebration Web App</title>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,16 +27,19 @@
   <div class="welcome-overlay" id="welcome-overlay">
     <div class="welcome-guide-card">
       <div class="sound-wave-icon-wrap">
-        <div class="speaker-emoji">🔊</div>
+        <svg class="svg-speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
         <div class="pulse-sound-waves">
           <span></span><span></span><span></span>
         </div>
       </div>
       
-      <span class="welcome-badge">AUDIO EXPERIENCE</span>
-      <h2 class="welcome-title">Turn Up the Volume! 📢</h2>
+      <span class="welcome-badge">AUDIO & VISUAL EXPERIENCE</span>
+      <h2 class="welcome-title">Turn Up Your Volume!</h2>
       <p class="welcome-desc">
-        Behtareen birthday experience ke liye apne <strong>phone ka volume full karein</strong> ya <strong>headphones</strong> use karein! 🎧✨
+        For the ultimate birthday celebration experience, please <strong>set your volume to maximum</strong> or plug in your <strong>headphones</strong>!
       </p>
 
       <div class="volume-meter-bar">
@@ -44,11 +47,17 @@
         <div class="vol-track">
           <div class="vol-fill"></div>
         </div>
-        <span class="vol-pct">100% 🔥</span>
+        <span class="vol-pct">100% MAX</span>
       </div>
 
       <button id="enter-celebration-btn" class="action-btn enter-btn">
-        <span>🎉</span> Enter Celebration <span>✨</span>
+        <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
+        </svg>
+        <span>Enter Celebration</span>
+        <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/>
+        </svg>
       </button>
     </div>
   </div>
@@ -56,21 +65,27 @@
   <!-- Top Floating Controls Bar -->
   <header class="top-nav">
     <div class="brand-badge">
-      <span class="badge-icon">✨</span>
-      <span class="badge-text" id="header-nickname">Superstar Yaar</span>
+      <svg class="svg-badge-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      <span class="badge-text" id="header-nickname">Superstar</span>
     </div>
     <div class="nav-actions">
       <!-- Music Toggle Button -->
-      <button id="music-btn" class="icon-btn" title="Toggle Birthday Music" aria-label="Toggle Music">
-        <span class="music-icon" id="music-icon">🎵</span>
+      <button id="music-btn" class="icon-btn" title="Toggle Music" aria-label="Toggle Music">
+        <svg class="svg-nav-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
         <div class="music-wave" id="music-wave">
           <span></span><span></span><span></span><span></span>
         </div>
       </button>
 
       <!-- Settings / Customizer Button (Hidden in shared view) -->
-      <button id="settings-btn" class="icon-btn customize-btn" title="Customize for your friend" aria-label="Open Settings">
-        <span class="gear-icon">⚙️</span>
+      <button id="settings-btn" class="icon-btn customize-btn" title="Customize website" aria-label="Open Settings">
+        <svg class="svg-nav-icon gear-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+        </svg>
         <span class="btn-label">Edit</span>
       </button>
     </div>
@@ -82,39 +97,106 @@
     <!-- 1. HERO SECTION -->
     <section class="section hero-section" id="hero">
       <div class="hero-confetti-badge">
-        <span>🎉 IT'S CELEBRATION TIME! 🎉</span>
+        <svg class="svg-tiny-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>
+        <span>OFFICIAL CELEBRATION</span>
+        <svg class="svg-tiny-star" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>
       </div>
       
       <div class="birthday-title-wrap">
         <h2 class="sub-greeting">WISHING THE HAPPIEST BIRTHDAY TO</h2>
         <h1 class="main-name" id="display-name">RAHUL</h1>
-        <div class="tag-pill" id="display-tagline">✨ The Official Legend of the Gang ✨</div>
+        <div class="tag-pill" id="display-tagline">The Legend & Main Character</div>
       </div>
 
+      <!-- Avatar Box with Birthday Cone Party Hat -->
       <div class="hero-avatar-box">
         <div class="avatar-ring pulse-ring"></div>
         <div class="avatar-img-wrap" id="hero-avatar-wrap">
           <img id="display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80" alt="Birthday Star">
         </div>
-        <div class="birthday-crown">👑</div>
-        <div class="bday-age-badge" id="display-age">21 🔥</div>
+        
+        <!-- Birthday Cone Hat (Topi) SVG over Avatar -->
+        <div class="birthday-hat-container">
+          <svg class="party-hat-svg" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ff2a85"/>
+                <stop offset="50%" stop-color="#ff7300"/>
+                <stop offset="100%" stop-color="#ffd700"/>
+              </linearGradient>
+              <linearGradient id="stripeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00f2fe"/>
+                <stop offset="100%" stop-color="#4facfe"/>
+              </linearGradient>
+              <filter id="hatShadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000" flood-opacity="0.5"/>
+              </filter>
+            </defs>
+
+            <!-- Hat Main Cone -->
+            <path d="M 60 20 L 15 110 Q 60 128 105 110 Z" fill="url(#hatGradient)" filter="url(#hatShadow)" stroke="#ffffff" stroke-width="2.5"/>
+            
+            <!-- Pattern Stripes -->
+            <path d="M 48 45 L 72 45 L 79 60 L 41 60 Z" fill="url(#stripeGradient)"/>
+            <path d="M 36 70 L 84 70 L 93 86 L 27 86 Z" fill="#ffffff" opacity="0.9"/>
+            <path d="M 23 94 L 97 94 L 103 106 Q 60 122 17 106 Z" fill="#8e2de2"/>
+
+            <!-- Polka Dots -->
+            <circle cx="53" cy="52" r="3" fill="#ffffff"/>
+            <circle cx="67" cy="53" r="2.5" fill="#ffffff"/>
+            <circle cx="45" cy="78" r="3.5" fill="#ff2a85"/>
+            <circle cx="60" cy="78" r="3.5" fill="#ff2a85"/>
+            <circle cx="75" cy="78" r="3.5" fill="#ff2a85"/>
+
+            <!-- Fluffy Pom-Pom on Top -->
+            <circle cx="60" cy="20" r="12" fill="#ffd700" stroke="#ffffff" stroke-width="2.5"/>
+            <circle cx="56" cy="16" r="3.5" fill="#ffffff"/>
+            <circle cx="64" cy="22" r="2" fill="#fff" opacity="0.8"/>
+            
+            <!-- Bottom Frill / Trim Ruffles -->
+            <g fill="#ffc837" stroke="#ffffff" stroke-width="1.5">
+              <circle cx="20" cy="111" r="5.5"/>
+              <circle cx="30" cy="115" r="5.5"/>
+              <circle cx="42" cy="118" r="5.5"/>
+              <circle cx="54" cy="119" r="5.5"/>
+              <circle cx="66" cy="119" r="5.5"/>
+              <circle cx="78" cy="118" r="5.5"/>
+              <circle cx="90" cy="115" r="5.5"/>
+              <circle cx="100" cy="111" r="5.5"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="bday-age-badge" id="display-age">21</div>
       </div>
 
       <!-- Quick Action Jump Buttons -->
       <div class="quick-nav-pills">
-        <a href="#balloon-game" class="pill-btn"><span class="pill-emoji">🎈</span> Pop Balloons</a>
-        <a href="#cake-section" class="pill-btn highlight"><span class="pill-emoji">🎂</span> Cut Cake</a>
-        <a href="#memories-section" class="pill-btn"><span class="pill-emoji">📸</span> Memories</a>
-        <a href="#letter-section" class="pill-btn"><span class="pill-emoji">💌</span> Wish Note</a>
+        <a href="#balloon-game" class="pill-btn">
+          <svg class="pill-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 10.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+          Balloons
+        </a>
+        <a href="#cake-section" class="pill-btn highlight">
+          <svg class="pill-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6a2 2 0 0 0 2-2c0-.38-.1-.73-.29-1.03L12 0l-1.71 2.97c-.19.3-.29.65-.29 1.03a2 2 0 0 0 2 2zm6 3h-1V8c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v1H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2zm-6 2c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2s-2-.9-2-2v-2c0-1.1.9-2 2-2z"/></svg>
+          Cut Cake
+        </a>
+        <a href="#memories-section" class="pill-btn">
+          <svg class="pill-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+          Memories
+        </a>
+        <a href="#letter-section" class="pill-btn">
+          <svg class="pill-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          Wish Letter
+        </a>
       </div>
     </section>
 
     <!-- 2. BALLOON POPPING MINI-GAME -->
     <section class="section balloon-game-section" id="balloon-game">
       <div class="section-header">
-        <span class="section-tag">TAP & POP MINI-GAME</span>
-        <h2 class="section-title">Pop the Balloons! 🎈</h2>
-        <p class="section-desc">Tap the floating balloons to unlock secret birthday roasts & wishes!</p>
+        <span class="section-tag">INTERACTIVE MINI-GAME</span>
+        <h2 class="section-title">Pop the Balloons!</h2>
+        <p class="section-desc">Tap each floating balloon to unlock secret birthday wishes & funny roasts!</p>
       </div>
 
       <div class="balloon-arena-wrapper">
@@ -123,7 +205,10 @@
             <span class="score-label">Popped:</span>
             <span class="score-val" id="popped-count">0</span> / 6
           </div>
-          <button id="spawn-balloons-btn" class="mini-btn">🔄 Refresh Balloons</button>
+          <button id="spawn-balloons-btn" class="mini-btn">
+            <svg class="svg-inline-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+            Refresh Balloons
+          </button>
         </div>
 
         <div class="balloon-game-box" id="balloon-box">
@@ -135,9 +220,9 @@
     <!-- 3. INTERACTIVE CAKE CUTTING SECTION -->
     <section class="section cake-section" id="cake-section">
       <div class="section-header">
-        <span class="section-tag">BIRTHDAY RITUAL</span>
-        <h2 class="section-title">Virtual Cake Cutting 🎂</h2>
-        <p class="section-desc" id="cake-instruction-text">First blow the candle, then tap the knife to cut the cake!</p>
+        <span class="section-tag">BIRTHDAY TRADITION</span>
+        <h2 class="section-title">Virtual Cake Cutting</h2>
+        <p class="section-desc" id="cake-instruction-text">First blow the candle, then tap the knife to slice the cake!</p>
       </div>
 
       <div class="cake-stage-container">
@@ -160,9 +245,9 @@
           <!-- Cake Layers -->
           <div class="cake-top-tier">
             <div class="cake-frosting-top">
-              <span class="cherry">🍒</span>
-              <span class="cherry">🍓</span>
-              <span class="cherry">🍒</span>
+              <div class="cake-berry"></div>
+              <div class="cake-berry"></div>
+              <div class="cake-berry"></div>
             </div>
             <div class="cake-cream-drips"></div>
           </div>
@@ -170,7 +255,7 @@
           <div class="cake-bottom-tier" id="cake-bottom-tier">
             <div class="cake-slice-overlay" id="cake-slice-cut">
               <div class="cut-piece">
-                <span class="piece-sparkle">✨</span>
+                <svg class="svg-sparkle-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
               </div>
             </div>
             <div class="cake-sprinkles"></div>
@@ -179,25 +264,41 @@
           <div class="cake-plate"></div>
         </div>
 
-        <!-- Interactive Knife Element -->
-        <div class="interactive-knife" id="cake-knife">
-          <span class="knife-icon">🔪</span>
+        <!-- Interactive Knife Element SVG -->
+        <div class="interactive-knife" id="cake-knife" title="Tap to cut cake">
+          <svg class="knife-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Blade -->
+            <path d="M 20 80 L 75 25 Q 85 15 88 20 Q 90 28 80 40 L 35 85 Z" fill="url(#bladeGrad)" stroke="#e2e8f0" stroke-width="2"/>
+            <!-- Handle -->
+            <path d="M 15 85 L 28 72 L 38 82 L 25 95 Z" fill="#ff2a85" stroke="#fff" stroke-width="2" rx="3"/>
+            <defs>
+              <linearGradient id="bladeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="50%" stop-color="#e2e8f0"/>
+                <stop offset="100%" stop-color="#94a3b8"/>
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
 
         <!-- Cake Controls & Status -->
         <div class="cake-controls">
           <button id="blow-candle-btn" class="action-btn blow-btn">
-            <span class="btn-icon">💨</span> Blow Candle!
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M14.5 17c0 1.65-1.35 3-3 3s-3-1.35-3-3h2c0 .55.45 1 1 1s1-.45 1-1-1.35-3-3-3v-2c2.76 0 5 2.24 5 5zM19.5 12c0 2.21-1.79 4-4 4h-2c0-1.1.9-2 2-2s2-.9 2-2-1.79-4-4-4V6c3.31 0 6 2.69 6 6z"/></svg>
+            Blow Candle!
           </button>
           <button id="cut-cake-btn" class="action-btn cut-btn" disabled>
-            <span class="btn-icon">🍰</span> Cut Cake
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6a2 2 0 0 0 2-2c0-.38-.1-.73-.29-1.03L12 0l-1.71 2.97c-.19.3-.29.65-.29 1.03a2 2 0 0 0 2 2zm6 3h-1V8c0-.55-.45-1-1-1H8c-.55 0-1 .45-1 1v1H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V11c0-1.1-.9-2-2-2z"/></svg>
+            Cut Cake
           </button>
         </div>
 
         <div class="cake-success-card" id="cake-success-banner">
-          <div class="success-emoji">🥳🎉</div>
-          <h3>YAY! Happy Birthday Yaar!</h3>
-          <p>Treat aur party pakki ho gayi! 🍕🥤</p>
+          <div class="success-icon-wrap">
+            <svg class="svg-large-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+          </div>
+          <h3>Happy Birthday! Celebration Begun!</h3>
+          <p>Treat and party are officially unlocked!</p>
         </div>
       </div>
     </section>
@@ -205,9 +306,9 @@
     <!-- 4. POLAROID MEMORIES CAROUSEL -->
     <section class="section memories-section" id="memories-section">
       <div class="section-header">
-        <span class="section-tag">GOLDEN MOMENTS</span>
-        <h2 class="section-title">Friendship Hall of Fame 📸</h2>
-        <p class="section-desc">Swipe to browse the craziest memories & roasts!</p>
+        <span class="section-tag">UNFORGETTABLE MOMENTS</span>
+        <h2 class="section-title">Friendship Hall of Fame</h2>
+        <p class="section-desc">Swipe through the best memories and unforgettable stories!</p>
       </div>
 
       <div class="polaroid-carousel-wrapper">
@@ -220,8 +321,12 @@
         </div>
 
         <div class="carousel-controls">
-          <button id="prev-photo-btn" class="nav-arrow-btn" aria-label="Previous photo">‹</button>
-          <button id="next-photo-btn" class="nav-arrow-btn" aria-label="Next photo">›</button>
+          <button id="prev-photo-btn" class="nav-arrow-btn" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button id="next-photo-btn" class="nav-arrow-btn" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -230,42 +335,53 @@
     <section class="section letter-section" id="letter-section">
       <div class="section-header">
         <span class="section-tag">A HEARTFELT SURPRISE</span>
-        <h2 class="section-title">Gift Box for You 🎁</h2>
-        <p class="section-desc">Tap the gift box to open your personalized letter!</p>
+        <h2 class="section-title">A Special Gift For You</h2>
+        <p class="section-desc">Tap the gift box below to open your personalized letter!</p>
       </div>
 
       <div class="gift-box-stage">
         <div class="gift-box" id="gift-box-interactive" role="button" tabindex="0">
           <div class="gift-lid" id="gift-lid">
-            <div class="ribbon-bow">🎀</div>
+            <div class="ribbon-bow-svg-wrap">
+              <svg class="bow-svg" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 30 20 C 15 5, 0 10, 10 25 C 20 35, 28 22, 30 20 Z" fill="#ffd700"/>
+                <path d="M 30 20 C 45 5, 60 10, 50 25 C 40 35, 32 22, 30 20 Z" fill="#ffd700"/>
+                <circle cx="30" cy="20" r="6" fill="#ffc837" stroke="#fff" stroke-width="1.5"/>
+              </svg>
+            </div>
             <div class="lid-strap"></div>
           </div>
           <div class="gift-body">
             <div class="gift-ribbon-vertical"></div>
             <div class="gift-ribbon-horizontal"></div>
             <div class="gift-glow"></div>
-            <span class="tap-hint-text">TAP TO OPEN ✨</span>
+            <span class="tap-hint-text">TAP TO OPEN</span>
           </div>
         </div>
 
-        <!-- Unfolded Letter Popup/Card -->
+        <!-- Unfolded Letter Card -->
         <div class="letter-card" id="letter-card">
           <div class="letter-header">
-            <span class="stamp-badge">TOP SECRET 🌟</span>
+            <span class="stamp-badge">CONFIDENTIAL</span>
             <div class="letter-date" id="letter-display-date">Special Birthday Edition</div>
           </div>
           <div class="letter-content">
             <h3 class="letter-salutation">Dear <span id="letter-friend-name">Rahul</span>,</h3>
             <p id="letter-custom-body" class="letter-body-text">
-              Happy Birthday mere bhai! Zindagi mein hamesha aise hi muskurate reh, maze karte reh aur sabse zaroori... treat time pe dete reh! Tere jaisa dost milna mushkil hi nahi, namumkin hai! May this year bring you crazy success, happiness, good health, and tons of unforgettable memories together! Cheers to another awesome year of our unbreakable friendship! 🥂🚀
+              Happy Birthday my dear friend!
+
+Wishing you a day filled with boundless joy, laughter, and everything your heart desires! Finding a genuine friend like you is truly special. May this year bless you with tremendous success, great health, unmatched happiness, and countless more memories for us to cherish together!
+
+Cheers to another fantastic year of our friendship!
             </p>
             <div class="letter-signature">
-              <span>With tons of love,</span>
-              <strong id="letter-sender-name">Tere Saare Yaar & Gang ❤️</strong>
+              <span>With all our love & best wishes,</span>
+              <strong id="letter-sender-name">Your Best Friends & Gang</strong>
             </div>
           </div>
           <button id="blast-confetti-btn" class="action-btn celebrate-more-btn">
-            🎊 Blast Confetti Cannon!
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            Blast Confetti Cannon!
           </button>
         </div>
       </div>
@@ -273,16 +389,20 @@
 
     <!-- 6. CELEBRATION FOOTER & SHARE -->
     <footer class="app-footer">
-      <div class="footer-cake-icon">🎂✨🎈</div>
-      <p class="footer-wish">Made with immense love for <strong id="footer-friend-name">Rahul</strong></p>
+      <div class="footer-icon-wrap">
+        <svg class="svg-footer-icon" viewBox="0 0 24 24" fill="#ffd700"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      </div>
+      <p class="footer-wish">Crafted with love for <strong id="footer-friend-name">Rahul</strong></p>
       
       <div class="footer-actions">
         <button id="share-website-btn" class="action-btn share-btn">
-          <span>📤</span> Share Wish With Friend
+          <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+          Share Wish With Friend
         </button>
         <!-- Reopen settings (Hidden in shared view) -->
         <button id="reopen-settings-btn" class="sub-btn">
-          <span>⚙️</span> Edit Details for your Friend
+          <svg class="svg-inline-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+          Edit Details for your Friend
         </button>
       </div>
 
@@ -294,10 +414,12 @@
   <!-- POPUP MODAL: BALLOON MESSAGE -->
   <div class="modal-overlay" id="balloon-modal-overlay">
     <div class="balloon-pop-modal">
-      <div class="modal-emoji-burst" id="balloon-modal-emoji">🎈💥</div>
+      <div class="modal-svg-burst" id="balloon-modal-icon-wrap">
+        <svg class="svg-modal-icon" viewBox="0 0 24 24" fill="#ff2a85"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      </div>
       <h3 id="balloon-modal-title">You Popped a Wish!</h3>
-      <p id="balloon-modal-message">100 Saal Jiyo aur Party do!</p>
-      <button id="balloon-modal-close" class="action-btn">Awesome! 😎</button>
+      <p id="balloon-modal-message">Wishing you 100 years of joy and countless parties!</p>
+      <button id="balloon-modal-close" class="action-btn">Awesome!</button>
     </div>
   </div>
 
@@ -306,10 +428,10 @@
     <div class="settings-sheet">
       <div class="sheet-header">
         <div class="sheet-title-group">
-          <span class="sheet-icon">🎨</span>
+          <svg class="svg-sheet-icon" viewBox="0 0 24 24" fill="#ff2a85"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.59 10.59 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"/></svg>
           <div>
             <h3>Personalize Birthday Website</h3>
-            <p>Apne friend ke hisaab se live details customize karein</p>
+            <p>Customize all details live in English</p>
           </div>
         </div>
         <button id="close-settings-btn" class="close-sheet-btn" aria-label="Close settings">&times;</button>
@@ -318,24 +440,24 @@
       <div class="sheet-body">
         <!-- Form Inputs -->
         <div class="form-group">
-          <label for="input-name">Birthday Boy / Girl's Name</label>
-          <input type="text" id="input-name" placeholder="e.g. Rahul, Priya, Bunty" maxlength="30">
+          <label for="input-name">Birthday Person's Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Rahul, Alex, Sarah" maxlength="30">
         </div>
 
         <div class="form-group-row">
           <div class="form-group">
             <label for="input-nickname">Cool Nickname / Title</label>
-            <input type="text" id="input-nickname" placeholder="e.g. Bro, Bhai, Legend" maxlength="25">
+            <input type="text" id="input-nickname" placeholder="e.g. Superstar, Rockstar, Legend" maxlength="25">
           </div>
           <div class="form-group">
             <label for="input-age">Age / Badge</label>
-            <input type="text" id="input-age" placeholder="e.g. 21 🔥, 25 🎂" maxlength="15">
+            <input type="text" id="input-age" placeholder="e.g. 21, 25, Forever Young" maxlength="15">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="input-tagline">Tagline / Gang Title</label>
-          <input type="text" id="input-tagline" placeholder="e.g. ✨ The Official Legend of the Gang ✨">
+          <label for="input-tagline">Tagline / Subtitle</label>
+          <input type="text" id="input-tagline" placeholder="e.g. The Legend & Main Character">
         </div>
 
         <div class="form-group">
@@ -345,7 +467,7 @@
 
         <div class="form-group">
           <label for="input-sender">Your Name / Group Signature</label>
-          <input type="text" id="input-sender" placeholder="e.g. Tere Yaar, Rohan, The Backbenchers">
+          <input type="text" id="input-sender" placeholder="e.g. Your Best Friends, Alex & Gang">
         </div>
 
         <!-- Custom Avatar Upload -->
@@ -360,13 +482,13 @@
 
         <!-- Custom Music Selector & Options -->
         <div class="form-group">
-          <label>Background Song / Music Source</label>
+          <label>Background Music Source</label>
           <div class="audio-selection-wrap">
             <select id="input-music-preset">
-              <option value="happy_birthday_mp3">🎵 HappyBirthday.mp3 (Official Birthday Track)</option>
-              <option value="custom_url">🔗 Play from Custom Online Music URL / Link</option>
-              <option value="custom_file">📁 Upload Local MP3 File</option>
-              <option value="festive_synth">🎹 Upbeat Happy Birthday Synth Chimes</option>
+              <option value="happy_birthday_mp3">HappyBirthday.mp3 (Official Track)</option>
+              <option value="custom_url">Play from Custom Online Music URL / Link</option>
+              <option value="custom_file">Upload Local MP3 File</option>
+              <option value="festive_synth">Upbeat Birthday Synth Chimes</option>
             </select>
             
             <!-- Custom Online Music URL input -->
@@ -386,23 +508,24 @@
           <label class="toggle-container" for="input-music-loop">
             <input type="checkbox" id="input-music-loop" checked>
             <span class="toggle-slider"></span>
-            <span class="toggle-text">🔁 Repeat / Loop Music Continuously</span>
+            <span class="toggle-text">Repeat / Loop Music Continuously</span>
           </label>
         </div>
 
         <!-- Action Buttons -->
         <div class="sheet-actions">
           <button id="save-settings-btn" class="action-btn save-btn">
-            💾 Save & Apply Live
+            <svg class="btn-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Save & Apply Live
           </button>
           <button id="reset-settings-btn" class="sub-btn reset-btn">
-            🔄 Reset
+            Reset
           </button>
         </div>
 
-        <!-- Share Links for Friend (No Edit) vs Admin -->
+        <!-- Share Links for Friend (No Edit) -->
         <div class="share-link-box">
-          <label>🎁 Friend's Share Link (Edit button bilkul hidden rahega):</label>
+          <label>Friend's Share Link (Edit button will be completely hidden):</label>
           <div class="copy-input-row">
             <input type="text" id="share-friend-url-input" readonly>
             <button id="copy-friend-url-btn" class="mini-btn highlight">Copy Link</button>
