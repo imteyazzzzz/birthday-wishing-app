@@ -1,5 +1,5 @@
 /* ==========================================================================
-   BIRTHDAY CELEBRATION WEB APP - SVG & ENGLISH EDITION SCRIPT
+   BIRTHDAY CELEBRATION WEB APP - UI/UX PRO MAX SCRIPT
    ========================================================================== */
 
 (function () {
@@ -18,7 +18,7 @@ Wishing you a day filled with boundless joy, laughter, and everything your heart
 
 Cheers to another fantastic year of our friendship!`,
     sender: 'Your Best Friends & Gang',
-    musicPreset: 'happy_birthday_mp3', // local HappyBirthday.mp3
+    musicPreset: 'happy_birthday_mp3',
     musicLoop: true,
     customAudioUrl: '',
     customAudioData: null
@@ -35,21 +35,21 @@ Cheers to another fantastic year of our friendship!`,
   ];
 
   const BALLOON_COLORS = [
-    { bg: 'linear-gradient(135deg, #ff2a85, #ff7300)', iconColor: '#fff' },
-    { bg: 'linear-gradient(135deg, #00c6ff, #0072ff)', iconColor: '#fff' },
-    { bg: 'linear-gradient(135deg, #f7971e, #ffd200)', iconColor: '#111' },
-    { bg: 'linear-gradient(135deg, #8e2de2, #4a00e0)', iconColor: '#fff' },
-    { bg: 'linear-gradient(135deg, #11998e, #38ef7d)', iconColor: '#111' },
-    { bg: 'linear-gradient(135deg, #ff0844, #ffb199)', iconColor: '#fff' }
+    { bg: 'linear-gradient(135deg, #ff2a85, #ff7300)' },
+    { bg: 'linear-gradient(135deg, #00c6ff, #0072ff)' },
+    { bg: 'linear-gradient(135deg, #f7971e, #ffd200)' },
+    { bg: 'linear-gradient(135deg, #8e2de2, #4a00e0)' },
+    { bg: 'linear-gradient(135deg, #11998e, #38ef7d)' },
+    { bg: 'linear-gradient(135deg, #ff0844, #ffb199)' }
   ];
 
   const BALLOON_SVG_ICONS = [
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>',
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>',
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>',
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
-    '<svg class="balloon-inner-svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>',
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>',
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>',
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>',
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
+    '<svg class="ui-icon icon-sm" style="color:#fff;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>'
   ];
 
   // Polaroid Memories (English)
@@ -169,7 +169,6 @@ Cheers to another fantastic year of our friendship!`,
   function initApp() {
     loadConfigFromStorageOrUrl();
     renderAppConfig();
-    spawnAmbientStars();
     initBalloons();
     renderPolaroids();
     setupEventListeners();
@@ -223,7 +222,7 @@ Cheers to another fantastic year of our friendship!`,
 
     if (!loadedFromUrl) {
       try {
-        const saved = localStorage.getItem('bday_app_config_en');
+        const saved = localStorage.getItem('bday_app_config_promax');
         if (saved) {
           appConfig = Object.assign({}, DEFAULT_CONFIG, JSON.parse(saved));
         }
@@ -242,7 +241,7 @@ Cheers to another fantastic year of our friendship!`,
 
   function saveConfig() {
     try {
-      localStorage.setItem('bday_app_config_en', JSON.stringify(appConfig));
+      localStorage.setItem('bday_app_config_promax', JSON.stringify(appConfig));
       updateShareUrlInputs();
       showToast('Details saved successfully!');
     } catch (e) {
@@ -263,7 +262,6 @@ Cheers to another fantastic year of our friendship!`,
     letterSenderName.textContent = appConfig.sender || DEFAULT_CONFIG.sender;
     footerFriendName.textContent = appConfig.name || 'Rahul';
 
-    // Populate Settings Inputs
     inputName.value = appConfig.name;
     inputNickname.value = appConfig.nickname;
     inputAge.value = appConfig.age;
@@ -505,7 +503,7 @@ Cheers to another fantastic year of our friendship!`,
       }
       
       bgAudio.play().catch(e => {
-        console.log('Audio autoplay info:', e);
+        console.log('Audio autoplay policy note:', e);
       });
     }
   }
@@ -537,17 +535,16 @@ Cheers to another fantastic year of our friendship!`,
     poppedCountEl.textContent = '0';
 
     const boxWidth = balloonBox.clientWidth || 340;
-    const boxHeight = balloonBox.clientHeight || 280;
+    const boxHeight = balloonBox.clientHeight || 270;
 
     for (let i = 0; i < 6; i++) {
       const b = document.createElement('div');
       b.className = 'game-balloon';
       const colorScheme = BALLOON_COLORS[i % BALLOON_COLORS.length];
       b.style.background = colorScheme.bg;
-      b.style.color = colorScheme.iconColor;
 
-      const leftPos = 15 + Math.random() * (boxWidth - 90);
-      const topPos = 20 + Math.random() * (boxHeight - 120);
+      const leftPos = 15 + Math.random() * (boxWidth - 85);
+      const topPos = 20 + Math.random() * (boxHeight - 110);
       b.style.left = `${leftPos}px`;
       b.style.top = `${topPos}px`;
       b.style.animationDelay = `${(i * 0.4).toFixed(1)}s`;
@@ -691,7 +688,7 @@ Cheers to another fantastic year of our friendship!`,
 
     polaroidTrack.addEventListener('scroll', () => {
       const scrollLeft = polaroidTrack.scrollLeft;
-      const cardWidth = 276;
+      const cardWidth = 254; // 240 width + 14 gap
       const activeIdx = Math.round(scrollLeft / cardWidth);
       if (activeIdx !== currentPolaroidIndex && activeIdx >= 0 && activeIdx < DEFAULT_MEMORIES.length) {
         currentPolaroidIndex = activeIdx;
@@ -702,7 +699,7 @@ Cheers to another fantastic year of our friendship!`,
 
   function scrollToPolaroid(index) {
     currentPolaroidIndex = Math.max(0, Math.min(index, DEFAULT_MEMORIES.length - 1));
-    const cardWidth = 276;
+    const cardWidth = 254;
     polaroidTrack.scrollTo({
       left: currentPolaroidIndex * cardWidth,
       behavior: 'smooth'
@@ -740,7 +737,7 @@ Cheers to another fantastic year of our friendship!`,
   function triggerGrandConfetti() {
     if (!window.confetti) return;
     const end = Date.now() + 1500;
-    const colors = ['#ff2a85', '#ffc837', '#00f2fe', '#8b2fc9', '#ffffff'];
+    const colors = ['#ff2a85', '#ffd700', '#00f2fe', '#8b2fc9', '#ffffff'];
 
     (function frame() {
       window.confetti({
@@ -762,19 +759,6 @@ Cheers to another fantastic year of our friendship!`,
         requestAnimationFrame(frame);
       }
     })();
-  }
-
-  function spawnAmbientStars() {
-    const container = document.getElementById('ambient-container');
-    if (!container) return;
-    for (let i = 0; i < 20; i++) {
-      const star = document.createElement('div');
-      star.className = 'ambient-star';
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.animationDuration = `${5 + Math.random() * 6}s`;
-      star.style.animationDelay = `${Math.random() * 5}s`;
-      container.appendChild(star);
-    }
   }
 
   // ==========================================================================
