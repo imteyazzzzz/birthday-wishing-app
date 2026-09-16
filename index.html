@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday Bestie! 🎉🎂</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Canvas for Confetti & Particle Effects -->
+  <canvas id="fireworks-canvas"></canvas>
+
+  <!-- Ambient Floating Background Particles & Balloons Container -->
+  <div id="ambient-container" aria-hidden="true"></div>
+
+  <!-- Top Floating Controls Bar -->
+  <header class="top-nav">
+    <div class="brand-badge">
+      <span class="badge-icon">✨</span>
+      <span class="badge-text" id="header-nickname">Superstar Yaar</span>
+    </div>
+    <div class="nav-actions">
+      <!-- Music Toggle Button -->
+      <button id="music-btn" class="icon-btn" title="Toggle Birthday Music" aria-label="Toggle Music">
+        <span class="music-icon" id="music-icon">🎵</span>
+        <div class="music-wave" id="music-wave">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </button>
+
+      <!-- Settings / Customizer Button -->
+      <button id="settings-btn" class="icon-btn customize-btn" title="Customize for your friend" aria-label="Open Settings">
+        <span class="gear-icon">⚙️</span>
+        <span class="btn-label">Edit</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Scrollable App Container -->
+  <main class="app-wrapper">
+    
+    <!-- 1. HERO SECTION -->
+    <section class="section hero-section" id="hero">
+      <div class="hero-confetti-badge">
+        <span>🎉 IT'S CELEBRATION TIME! 🎉</span>
+      </div>
+      
+      <div class="birthday-title-wrap">
+        <h2 class="sub-greeting">WISHING THE HAPPIEST BIRTHDAY TO</h2>
+        <h1 class="main-name" id="display-name">RAHUL</h1>
+        <div class="tag-pill" id="display-tagline">✨ The Official Legend of the Gang ✨</div>
+      </div>
+
+      <div class="hero-avatar-box">
+        <div class="avatar-ring pulse-ring"></div>
+        <div class="avatar-img-wrap" id="hero-avatar-wrap">
+          <img id="display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=80" alt="Birthday Star">
+        </div>
+        <div class="birthday-crown">👑</div>
+        <div class="bday-age-badge" id="display-age">21 🔥</div>
+      </div>
+
+      <!-- Quick Action Jump Buttons -->
+      <div class="quick-nav-pills">
+        <a href="#balloon-game" class="pill-btn"><span class="pill-emoji">🎈</span> Pop Balloons</a>
+        <a href="#cake-section" class="pill-btn highlight"><span class="pill-emoji">🎂</span> Cut Cake</a>
+        <a href="#memories-section" class="pill-btn"><span class="pill-emoji">📸</span> Memories</a>
+        <a href="#letter-section" class="pill-btn"><span class="pill-emoji">💌</span> Wish Note</a>
+      </div>
+    </section>
+
+    <!-- 2. BALLOON POPPING MINI-GAME -->
+    <section class="section balloon-game-section" id="balloon-game">
+      <div class="section-header">
+        <span class="section-tag">TAP & POP MINI-GAME</span>
+        <h2 class="section-title">Pop the Balloons! 🎈</h2>
+        <p class="section-desc">Tap the floating balloons to unlock secret birthday roasts & wishes!</p>
+      </div>
+
+      <div class="balloon-arena-wrapper">
+        <div class="balloon-score-bar">
+          <div class="score-item">
+            <span class="score-label">Popped:</span>
+            <span class="score-val" id="popped-count">0</span> / 6
+          </div>
+          <button id="spawn-balloons-btn" class="mini-btn">🔄 Refresh Balloons</button>
+        </div>
+
+        <div class="balloon-game-box" id="balloon-box">
+          <!-- Floating Interactive Balloons Spawned by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. INTERACTIVE CAKE CUTTING SECTION -->
+    <section class="section cake-section" id="cake-section">
+      <div class="section-header">
+        <span class="section-tag">BIRTHDAY RITUAL</span>
+        <h2 class="section-title">Virtual Cake Cutting 🎂</h2>
+        <p class="section-desc" id="cake-instruction-text">First blow the candle, then tap the knife to cut the cake!</p>
+      </div>
+
+      <div class="cake-stage-container">
+        <!-- Spotlight glow effect -->
+        <div class="cake-glow-backdrop"></div>
+
+        <!-- 3D Layered Cake Display -->
+        <div class="cake-3d" id="birthday-cake">
+          <!-- Candle with Flame -->
+          <div class="candle-wrapper" id="candle-wrap" role="button" tabindex="0" title="Tap to blow candle">
+            <div class="flame" id="candle-flame">
+              <div class="flame-core"></div>
+              <div class="flame-glow"></div>
+            </div>
+            <div class="candle-stick">
+              <div class="candle-stripes"></div>
+            </div>
+          </div>
+
+          <!-- Cake Layers -->
+          <div class="cake-top-tier">
+            <div class="cake-frosting-top">
+              <span class="cherry">🍒</span>
+              <span class="cherry">🍓</span>
+              <span class="cherry">🍒</span>
+            </div>
+            <div class="cake-cream-drips"></div>
+          </div>
+          
+          <div class="cake-bottom-tier" id="cake-bottom-tier">
+            <div class="cake-slice-overlay" id="cake-slice-cut">
+              <div class="cut-piece">
+                <span class="piece-sparkle">✨</span>
+              </div>
+            </div>
+            <div class="cake-sprinkles"></div>
+          </div>
+          
+          <div class="cake-plate"></div>
+        </div>
+
+        <!-- Interactive Knife Element -->
+        <div class="interactive-knife" id="cake-knife">
+          <span class="knife-icon">🔪</span>
+        </div>
+
+        <!-- Cake Controls & Status -->
+        <div class="cake-controls">
+          <button id="blow-candle-btn" class="action-btn blow-btn">
+            <span class="btn-icon">💨</span> Blow Candle!
+          </button>
+          <button id="cut-cake-btn" class="action-btn cut-btn" disabled>
+            <span class="btn-icon">🍰</span> Cut Cake
+          </button>
+        </div>
+
+        <div class="cake-success-card" id="cake-success-banner">
+          <div class="success-emoji">🥳🎉</div>
+          <h3>YAY! Happy Birthday Yaar!</h3>
+          <p>Treat aur party pakki ho gayi! 🍕🥤</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. POLAROID MEMORIES CAROUSEL -->
+    <section class="section memories-section" id="memories-section">
+      <div class="section-header">
+        <span class="section-tag">GOLDEN MOMENTS</span>
+        <h2 class="section-title">Friendship Hall of Fame 📸</h2>
+        <p class="section-desc">Swipe to browse the craziest memories & roasts!</p>
+      </div>
+
+      <div class="polaroid-carousel-wrapper">
+        <div class="polaroid-track" id="polaroid-track">
+          <!-- Dynamic Polaroid Cards rendered via JS -->
+        </div>
+
+        <div class="carousel-nav-dots" id="polaroid-dots">
+          <!-- Dot indicators generated by JS -->
+        </div>
+
+        <div class="carousel-controls">
+          <button id="prev-photo-btn" class="nav-arrow-btn" aria-label="Previous photo">‹</button>
+          <button id="next-photo-btn" class="nav-arrow-btn" aria-label="Next photo">›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SECRET SURPRISE BOX & WISH NOTE -->
+    <section class="section letter-section" id="letter-section">
+      <div class="section-header">
+        <span class="section-tag">A HEARTFELT SURPRISE</span>
+        <h2 class="section-title">Gift Box for You 🎁</h2>
+        <p class="section-desc">Tap the gift box to open your personalized letter!</p>
+      </div>
+
+      <div class="gift-box-stage">
+        <div class="gift-box" id="gift-box-interactive" role="button" tabindex="0">
+          <div class="gift-lid" id="gift-lid">
+            <div class="ribbon-bow">🎀</div>
+            <div class="lid-strap"></div>
+          </div>
+          <div class="gift-body">
+            <div class="gift-ribbon-vertical"></div>
+            <div class="gift-ribbon-horizontal"></div>
+            <div class="gift-glow"></div>
+            <span class="tap-hint-text">TAP TO OPEN ✨</span>
+          </div>
+        </div>
+
+        <!-- Unfolded Letter Popup/Card -->
+        <div class="letter-card" id="letter-card">
+          <div class="letter-header">
+            <span class="stamp-badge">TOP SECRET 🌟</span>
+            <div class="letter-date" id="letter-display-date">Special Birthday Edition</div>
+          </div>
+          <div class="letter-content">
+            <h3 class="letter-salutation">Dear <span id="letter-friend-name">Rahul</span>,</h3>
+            <p id="letter-custom-body" class="letter-body-text">
+              Happy Birthday mere bhai! Zindagi mein hamesha aise hi muskurate reh, maze karte reh aur sabse zaroori... treat time pe dete reh! Tere jaisa dost milna mushkil hi nahi, namumkin hai! May this year bring you crazy success, happiness, good health, and tons of unforgettable memories together! Cheers to another awesome year of our unbreakable friendship! 🥂🚀
+            </p>
+            <div class="letter-signature">
+              <span>With tons of love,</span>
+              <strong id="letter-sender-name">Tere Saare Yaar & Gang ❤️</strong>
+            </div>
+          </div>
+          <button id="blast-confetti-btn" class="action-btn celebrate-more-btn">
+            🎊 Blast Confetti Cannon!
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. CELEBRATION FOOTER & SHARE -->
+    <footer class="app-footer">
+      <div class="footer-cake-icon">🎂✨🎈</div>
+      <p class="footer-wish">Made with immense love for <strong id="footer-friend-name">Rahul</strong></p>
+      
+      <div class="footer-actions">
+        <button id="share-website-btn" class="action-btn share-btn">
+          <span>📤</span> Share This Wish
+        </button>
+        <button id="reopen-settings-btn" class="sub-btn">
+          <span>⚙️</span> Edit Details for your Friend
+        </button>
+      </div>
+
+      <div class="toast-notification" id="app-toast"></div>
+    </footer>
+
+  </main>
+
+  <!-- POPUP MODAL: BALLOON MESSAGE -->
+  <div class="modal-overlay" id="balloon-modal-overlay">
+    <div class="balloon-pop-modal">
+      <div class="modal-emoji-burst" id="balloon-modal-emoji">🎈💥</div>
+      <h3 id="balloon-modal-title">You Popped a Wish!</h3>
+      <p id="balloon-modal-message">100 Saal Jiyo aur Party do!</p>
+      <button id="balloon-modal-close" class="action-btn">Awesome! 😎</button>
+    </div>
+  </div>
+
+  <!-- LIVE CUSTOMIZER / SETTINGS MODAL -->
+  <div class="settings-modal-overlay" id="settings-modal">
+    <div class="settings-sheet">
+      <div class="sheet-header">
+        <div class="sheet-title-group">
+          <span class="sheet-icon">🎨</span>
+          <div>
+            <h3>Personalize Birthday Website</h3>
+            <p>Apne friend ke hisaab se live details change karein</p>
+          </div>
+        </div>
+        <button id="close-settings-btn" class="close-sheet-btn" aria-label="Close settings">&times;</button>
+      </div>
+
+      <div class="sheet-body">
+        <!-- Form Inputs -->
+        <div class="form-group">
+          <label for="input-name">Birthday Boy / Girl's Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Rahul, Priya, Bunty" maxlength="30">
+        </div>
+
+        <div class="form-group-row">
+          <div class="form-group">
+            <label for="input-nickname">Cool Nickname / Title</label>
+            <input type="text" id="input-nickname" placeholder="e.g. Bro, Bhai, Legend" maxlength="25">
+          </div>
+          <div class="form-group">
+            <label for="input-age">Age / Badge</label>
+            <input type="text" id="input-age" placeholder="e.g. 21 🔥, 25 🎂" maxlength="15">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="input-tagline">Tagline / Gang Title</label>
+          <input type="text" id="input-tagline" placeholder="e.g. ✨ The Official Legend of the Gang ✨">
+        </div>
+
+        <div class="form-group">
+          <label for="input-message">Custom Birthday Wish Note</label>
+          <textarea id="input-message" rows="4" placeholder="Type your special birthday message here..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="input-sender">Your Name / Group Signature</label>
+          <input type="text" id="input-sender" placeholder="e.g. Tere Yaar, Rohan, The Backbenchers">
+        </div>
+
+        <!-- Custom Avatar Upload -->
+        <div class="form-group">
+          <label>Friend's Hero Photo</label>
+          <div class="file-picker-wrap">
+            <input type="file" id="input-avatar-file" accept="image/*">
+            <div class="or-divider"><span>OR paste Image URL</span></div>
+            <input type="url" id="input-avatar-url" placeholder="https://images.unsplash.com/photo-...">
+          </div>
+        </div>
+
+        <!-- Custom Music Selector -->
+        <div class="form-group">
+          <label>Background Song / Audio</label>
+          <div class="audio-selection-wrap">
+            <select id="input-music-preset">
+              <option value="festive_synth">🎹 Upbeat Happy Birthday Synth Chimes (Built-in)</option>
+              <option value="party_beat">🥁 Celebration Party Melodies (Built-in)</option>
+              <option value="custom">📁 Upload Custom MP3 / Audio File</option>
+            </select>
+            <div id="custom-audio-upload-wrap" style="display:none; margin-top: 8px;">
+              <input type="file" id="input-audio-file" accept="audio/*">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="sheet-actions">
+          <button id="save-settings-btn" class="action-btn save-btn">
+            💾 Save & Apply Live
+          </button>
+          <button id="reset-settings-btn" class="sub-btn reset-btn">
+            🔄 Reset to Default
+          </button>
+        </div>
+
+        <div class="share-link-box">
+          <label>🔗 Shareable Link (Auto-saves your changes):</label>
+          <div class="copy-input-row">
+            <input type="text" id="share-url-input" readonly>
+            <button id="copy-url-btn" class="mini-btn highlight">Copy Link</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Element for Custom Files -->
+  <audio id="bg-audio" loop preload="auto"></audio>
+
+  <!-- JavaScript App Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
